@@ -1,0 +1,27 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558 
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "prebuild",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "main.cpp",
+                "-o",
+                "${workspaceFolderBasename}.exe"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "build", // aka "run"
+            "type": "shell",
+            "command": "./${workspaceFolderBasename}.exe",
+            "dependsOn": [
+                "prebuild"
+            ],
+            "problemMatcher": []
+        }
+    ]
+}
