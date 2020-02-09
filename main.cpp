@@ -31,16 +31,6 @@ void strassenR(vector< vector<int> > &matrixA,
         vector<vector<int> > submatrixC21( newMSize , vector<int> (newMSize, 0));
         vector<vector<int> > submatrixC22( newMSize , vector<int> (newMSize, 0));
 
-cout << "WHAT" << endl;
-
-        cout << endl << "matrixA" << endl;
-        for (int i = 0; i < newMSize; i++) {
-            for (int j = 0; j < newMSize; j++) {
-                cout << matrixA[i][j] << " ";
-            }
-            cout << endl;
-        }
-
         for (int i = 0; i < newMSize; i++) {
             for (int j = 0; j < newMSize; j++) {
                 submatrixA11[i][j] = matrixA[i][j];
