@@ -4,8 +4,6 @@
 #include <vector>
 using namespace std;
 
-const string INPUT_FILE_NAME = "input.txt";
-
 void add(vector< vector<int> > &matrixA, 
          vector< vector<int> > &matrixB, 
          vector< vector<int> > &matrixC, int mSize) {
@@ -39,44 +37,44 @@ void strassenR(vector< vector<int> > &matrixA,
     }
     else {
         int newMSize = mSize / 2;
-        vector<int> innerVec(newMSize, 0);
+        vector<int> innerVector(newMSize, 0);
 
-        vector< vector<int> > submatrixA11(newMSize, innerVec);
-        vector< vector<int> > submatrixA12(newMSize, innerVec);
-        vector< vector<int> > submatrixA21(newMSize, innerVec);
-        vector< vector<int> > submatrixA22(newMSize, innerVec);
+        vector< vector<int> > submatrixA11(newMSize, innerVector);
+        vector< vector<int> > submatrixA12(newMSize, innerVector);
+        vector< vector<int> > submatrixA21(newMSize, innerVector);
+        vector< vector<int> > submatrixA22(newMSize, innerVector);
 
-        vector< vector<int> > submatrixB11(newMSize, innerVec);
-        vector< vector<int> > submatrixB12(newMSize, innerVec);
-        vector< vector<int> > submatrixB21(newMSize, innerVec);
-        vector< vector<int> > submatrixB22(newMSize, innerVec);
+        vector< vector<int> > submatrixB11(newMSize, innerVector);
+        vector< vector<int> > submatrixB12(newMSize, innerVector);
+        vector< vector<int> > submatrixB21(newMSize, innerVector);
+        vector< vector<int> > submatrixB22(newMSize, innerVector);
 
-        vector< vector<int> > submatrixC11(newMSize, innerVec);
-        vector< vector<int> > submatrixC12(newMSize, innerVec);
-        vector< vector<int> > submatrixC21(newMSize, innerVec);
-        vector< vector<int> > submatrixC22(newMSize, innerVec);
+        vector< vector<int> > submatrixC11(newMSize, innerVector);
+        vector< vector<int> > submatrixC12(newMSize, innerVector);
+        vector< vector<int> > submatrixC21(newMSize, innerVector);
+        vector< vector<int> > submatrixC22(newMSize, innerVector);
 
-        vector< vector<int> > s1(newMSize, innerVec);
-        vector< vector<int> > s2(newMSize, innerVec);
-        vector< vector<int> > s3(newMSize, innerVec);
-        vector< vector<int> > s4(newMSize, innerVec);
-        vector< vector<int> > s5(newMSize, innerVec);
-        vector< vector<int> > s6(newMSize, innerVec);
-        vector< vector<int> > s7(newMSize, innerVec);
-        vector< vector<int> > s8(newMSize, innerVec);
-        vector< vector<int> > s9(newMSize, innerVec);
-        vector< vector<int> > s10(newMSize, innerVec);
+        vector< vector<int> > s1(newMSize, innerVector);
+        vector< vector<int> > s2(newMSize, innerVector);
+        vector< vector<int> > s3(newMSize, innerVector);
+        vector< vector<int> > s4(newMSize, innerVector);
+        vector< vector<int> > s5(newMSize, innerVector);
+        vector< vector<int> > s6(newMSize, innerVector);
+        vector< vector<int> > s7(newMSize, innerVector);
+        vector< vector<int> > s8(newMSize, innerVector);
+        vector< vector<int> > s9(newMSize, innerVector);
+        vector< vector<int> > s10(newMSize, innerVector);
 
-        vector< vector<int> > p1(newMSize, innerVec);
-        vector< vector<int> > p2(newMSize, innerVec);
-        vector< vector<int> > p3(newMSize, innerVec);
-        vector< vector<int> > p4(newMSize, innerVec);
-        vector< vector<int> > p5(newMSize, innerVec);
-        vector< vector<int> > p6(newMSize, innerVec);
-        vector< vector<int> > p7(newMSize, innerVec);
+        vector< vector<int> > p1(newMSize, innerVector);
+        vector< vector<int> > p2(newMSize, innerVector);
+        vector< vector<int> > p3(newMSize, innerVector);
+        vector< vector<int> > p4(newMSize, innerVector);
+        vector< vector<int> > p5(newMSize, innerVector);
+        vector< vector<int> > p6(newMSize, innerVector);
+        vector< vector<int> > p7(newMSize, innerVector);
 
-        vector< vector<int> > matrixAResult(newMSize, innerVec);
-        vector< vector<int> > matrixBResult(newMSize, innerVec);
+        vector< vector<int> > matrixAResult(newMSize, innerVector);
+        vector< vector<int> > matrixBResult(newMSize, innerVector);
 
         // divide matrices
         for (int i = 0; i < newMSize; i++) {
@@ -150,9 +148,14 @@ void strassen(vector< vector<int> > &matrixA,
 }
 
 int main() {
-    int matrixSize;
+    unsigned int matrixSize;
     ifstream inputFile;
-    inputFile.open(INPUT_FILE_NAME);
+    string inputFileName;
+
+    // get the file name from user
+    cout << "Input file name: ";
+    cin >> inputFileName;
+    inputFile.open(inputFileName);
 
     // get the size of the matrix from first line of input file
     if (inputFile.is_open()) {
@@ -163,10 +166,10 @@ int main() {
 
     // validate matrix size constraints
     if (matrixSize < 1 || matrixSize > 256) {
-        cout << "n must be between 1 and 256 (including 1 and 256)" << endl;
+        cout << endl << "ERROR: n must be between 1 and 256 (including 1 and 256)" << endl;
         return 0;
     } else if (ceil(log2(matrixSize)) != floor(log2(matrixSize))) {
-        cout << "n must be a power of 2" << endl;
+        cout << endl << "ERROR: n must be a power of 2" << endl;
         return 0;
     }
 
