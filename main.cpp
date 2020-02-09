@@ -4,9 +4,12 @@
 #include <vector>
 using namespace std;
 
+const string OUTPUT_FILE_NAME = "output.txt";
+
+// add two matrices
 void add(vector< vector<int> > &matrixA, 
          vector< vector<int> > &matrixB, 
-         vector< vector<int> > &matrixC, int mSize) {
+         vector< vector<int> > &matrixC, unsigned int mSize) {
     for (int i = 0; i < mSize; i++) {
         for (int j = 0; j < mSize; j++) {
             matrixC[i][j] = matrixA[i][j] + matrixB[i][j];
@@ -14,14 +17,28 @@ void add(vector< vector<int> > &matrixA,
     }
 }
 
+// subtract two matrices
 void sub(vector< vector<int> > &matrixA, 
         vector< vector<int> > &matrixB, 
-        vector< vector<int> > &matrixC, int mSize) {
+        vector< vector<int> > &matrixC, unsigned int mSize) {
     for (int i = 0; i < mSize; i++) {
         for (int j = 0; j < mSize; j++) {
             matrixC[i][j] = matrixA[i][j] - matrixB[i][j];
         }
     }   
+}
+
+// write matrix to output file
+void writeToFile(vector< vector<int> > &matrixC, unsigned int mSize) {
+    ofstream outputFile;
+    outputFile.open(OUTPUT_FILE_NAME);
+    for (int i = 0; i < mSize; i++) {
+        for (int j = 0; j < mSize; j++) {
+            outputFile << matrixC[i][j] << " ";
+        }
+        outputFile << "\n";
+    }
+    outputFile.close();
 }
 
 // recursive strassen matrix multiplier
@@ -202,6 +219,7 @@ int main() {
             lineCounter++;
         }
     }
+    inputFile.close();
 
     strassen(matrixA, matrixB, matrixC, matrixSize);
 
@@ -229,7 +247,7 @@ int main() {
         cout << endl;
     }
 
-    inputFile.close();
+    writeToFile(matrixC, matrixSize);
 
     return 0;
 }
