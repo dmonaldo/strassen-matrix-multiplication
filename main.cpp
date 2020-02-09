@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include <typeinfo>
+#include <cmath>
 #include <vector>
 using namespace std;
 
@@ -161,10 +161,19 @@ int main() {
         matrixSize = stoi(firstLine);
     }
 
+    // validate matrix size constraints
+    if (matrixSize < 1 || matrixSize > 256) {
+        cout << "n must be between 1 and 256 (including 1 and 256)" << endl;
+        return 0;
+    } else if (ceil(log2(matrixSize)) != floor(log2(matrixSize))) {
+        cout << "n must be a power of 2" << endl;
+        return 0;
+    }
+
     // initialize matrices
     vector< vector<int> > matrixA;
     vector< vector<int> > matrixB;
-    vector< vector<int> > matrixC( matrixSize , vector<int> (matrixSize, 0));
+    vector< vector<int> > matrixC(matrixSize, vector<int> (matrixSize, 0));
     vector<int> rowVector(matrixSize);
 
     // populate matrices with values from input file
@@ -190,8 +199,6 @@ int main() {
             lineCounter++;
         }
     }
-
-    // strassenR(matrixA, matrixB, matrixC, matrixSize);
 
     strassen(matrixA, matrixB, matrixC, matrixSize);
 
