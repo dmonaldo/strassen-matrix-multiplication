@@ -31,13 +31,15 @@ void strassenR(vector< vector<int> > &matrixA,
         vector<vector<int> > submatrixC21( newMSize , vector<int> (newMSize, 0));
         vector<vector<int> > submatrixC22( newMSize , vector<int> (newMSize, 0));
 
-        // vector< vector<int> > 
-        //     submatrixA11(newMSize, 0), submatrixA12(newMSize, 0), submatrixA21(newMSize, 0), submatrixA22(newMSize, 0),
-        //     submatrixB11(newMSize, 0), submatrixB12(newMSize, 0), submatrixB21(newMSize, 0), submatrixB22(newMSize, 0),
-        //       submatrixC11(newMSize, 0), submatrixC12(newMSize, 0), submatrixC21(newMSize, 0), submatrixC22(newMSize, 0),
-        //     p1(newMSize, 0), p2(newMSize, 0), p3(newMSize, 0), p4(newMSize, 0), 
-        //     p5(newMSize, 0), p6(newMSize, 0), p7(newMSize, 0),
-        //     aResult(newMSize, 0), bResult(newMSize, 0);
+cout << "WHAT" << endl;
+
+        cout << endl << "matrixA" << endl;
+        for (int i = 0; i < newMSize; i++) {
+            for (int j = 0; j < newMSize; j++) {
+                cout << matrixA[i][j] << " ";
+            }
+            cout << endl;
+        }
 
         for (int i = 0; i < newMSize; i++) {
             for (int j = 0; j < newMSize; j++) {
@@ -126,6 +128,14 @@ void strassenR(vector< vector<int> > &matrixA,
     }
 }
 
+void strassen(vector< vector<int> > &matrixA,
+            vector< vector<int> > &matrixB,
+            vector< vector<int> > &matrixC,
+            int mSize) {
+
+    strassenR(matrixA, matrixB, matrixC, mSize);
+}
+
 int main() {
     int matrixSize;
     ifstream inputFile;
@@ -168,7 +178,7 @@ int main() {
         }
     }
 
-    strassenR(matrixA, matrixB, matrixC, matrixSize);
+    strassen(matrixA, matrixB, matrixC, matrixSize);
 
     cout << endl << "MATRIX A" << endl;
     for (int i = 0; i < matrixSize; i++) {
