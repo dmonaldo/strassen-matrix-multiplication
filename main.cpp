@@ -56,7 +56,8 @@ void printMatrix(vector< vector<int> > &matrix, unsigned int mSize) {
 void strassenR(vector< vector<int> > &matrixA,
             vector< vector<int> > &matrixB,
             vector< vector<int> > &matrixC,
-            int mSize) {
+            unsigned int mSize,
+            unsigned int inputMatrixSize) {
 
     // recursive base case
     if (mSize == 1) {
@@ -122,27 +123,27 @@ void strassenR(vector< vector<int> > &matrixA,
         // Calculating p1 to p7:
         add(submatrixA11, submatrixA22, s5, newMSize); // a11 + a22 = s5
         add(submatrixB11, submatrixB22, s6, newMSize); // b11 + b22 = s6
-        strassenR(s5, s6, p1, newMSize); // p1 = (a11+a22) * (b11+b22)
+        strassenR(s5, s6, p1, newMSize, inputMatrixSize); // p1 = (a11+a22) * (b11+b22)
 
         add(submatrixA21, submatrixA22, s3, newMSize); // a21 + a22 = s3
-        strassenR(s3, submatrixB11, p2, newMSize); // p2 = (a21+a22) * (b11)
+        strassenR(s3, submatrixB11, p2, newMSize, inputMatrixSize); // p2 = (a21+a22) * (b11)
 
         sub(submatrixB12, submatrixB22, s1, newMSize); // b12 - b22 = s1
-        strassenR(submatrixA11, s1, p3, newMSize); // p3 = (a11) * (b12 - b22)
+        strassenR(submatrixA11, s1, p3, newMSize, inputMatrixSize); // p3 = (a11) * (b12 - b22)
 
         sub(submatrixB21, submatrixB11, s4, newMSize); // b21 - b11 = s4
-        strassenR(submatrixA22, s4, p4, newMSize); // p4 = (a22) * (b21 - b11)
+        strassenR(submatrixA22, s4, p4, newMSize, inputMatrixSize); // p4 = (a22) * (b21 - b11)
 
         add(submatrixA11, submatrixA12, s2, newMSize); // a11 + a12 = s2
-        strassenR(s2, submatrixB22, p5, newMSize); // p5 = (a11+a12) * (b22)
+        strassenR(s2, submatrixB22, p5, newMSize, inputMatrixSize); // p5 = (a11+a12) * (b22)
 
         sub(submatrixA21, submatrixA11, s9, newMSize); // a21 - a11 = s9 IS THIS CORRECT???
         add(submatrixB11, submatrixB12, s10, newMSize); // b11 + b12 = s10
-        strassenR(s9, s10, p6, newMSize); // p6 = (a21-a11) * (b11+b12)
+        strassenR(s9, s10, p6, newMSize, inputMatrixSize); // p6 = (a21-a11) * (b11+b12)
 
         sub(submatrixA12, submatrixA22, s7, newMSize); // a12 - a22 = s7
         add(submatrixB21, submatrixB22, s8, newMSize); // b21 + b22 = s8
-        strassenR(s7, s8, p7, newMSize); // p7 = (a12-a22) * (b21+b22)
+        strassenR(s7, s8, p7, newMSize, inputMatrixSize); // p7 = (a12-a22) * (b21+b22)
 
         // calculating c21, c21, c11 e c22:
         add(p3, p5, submatrixC12, newMSize); // c12 = p3 + p5
@@ -165,14 +166,31 @@ void strassenR(vector< vector<int> > &matrixA,
                 matrixC[i + newMSize][j + newMSize] = submatrixC22[i][j];
             }
         }
+
+        // print s values to console for input matrices of n = 2
+        if (inputMatrixSize == 2) {
+            cout << endl;
+            cout << "S1: " << s1[0][0] << endl;
+            cout << "S2: " << s2[0][0] << endl;
+            cout << "S3: " << s3[0][0] << endl;
+            cout << "S4: " << s4[0][0] << endl;
+            cout << "S5: " << s5[0][0] << endl;
+            cout << "S6: " << s6[0][0] << endl;
+            cout << "S7: " << s7[0][0] << endl;
+            cout << "S8: " << s8[0][0] << endl;
+            cout << "S9: " << s9[0][0] << endl;
+            cout << "S10: " << s10[0][0] << endl;
+        }
     }
 }
 
 // call recursive function
 void strassen(vector< vector<int> > &matrixA, 
               vector< vector<int> > &matrixB, 
-              vector< vector<int> > &matrixC, unsigned int mSize) {
-    strassenR(matrixA, matrixB, matrixC, mSize);
+              vector< vector<int> > &matrixC,
+              unsigned int mSize,
+              unsigned int inputMSize) {
+    strassenR(matrixA, matrixB, matrixC, mSize, inputMSize);
 }
 
 int main() {
@@ -209,30 +227,31 @@ int main() {
 
     // populate matrices with values from input file
     if (inputFile.is_open()) {
-        int lineCounter = 0;
-        int row = 0;
+        int lineCounter = 0; // used to keep track of current line in file
+        int row = 0; // used to keep track of current row in matrix
         while (!inputFile.eof()) {
             if (lineCounter < matrixSize) {
-                matrixA.push_back(rowVector); // add a new row,
+                matrixA.push_back(rowVector); // add a new row
                 for (int col = 0; col < matrixSize; col++) {
                     inputFile >> matrixA[row][col];
                 }
-                row++; // Keep track of actual row 
+                row++;
             } else if (lineCounter == matrixSize) {
                 row = 0;
             } else {
-                matrixB.push_back(rowVector); // add a new row,
+                matrixB.push_back(rowVector); // add a new row
                 for (int col = 0; col < matrixSize; col++) {
                     inputFile >> matrixB[row][col];
                 }
-                row++; // Keep track of actual row 
+                row++;
             }
-            lineCounter++;
+            lineCounter++; 
         }
     }
     inputFile.close();
 
-    strassen(matrixA, matrixB, matrixC, matrixSize);
+    // run strassen matrix multiplication algorithm
+    strassen(matrixA, matrixB, matrixC, matrixSize, matrixSize);
 
     cout << endl << "MATRIX A" << endl;
     printMatrix(matrixA, matrixSize);
@@ -243,6 +262,7 @@ int main() {
     cout << endl << "MATRIX C" << endl;
     printMatrix(matrixC, matrixSize);
 
+    // write matrix product to output file
     writeToFile(matrixC, matrixSize);
 
     return 0;
