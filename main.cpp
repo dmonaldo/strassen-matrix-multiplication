@@ -67,102 +67,128 @@ void strassenR(vector< vector<int> > &matrixA,
         int newMSize = mSize / 2;
         vector<int> innerVector(newMSize, 0);
 
-        vector< vector<int> > submatrixA11(newMSize, innerVector);
-        vector< vector<int> > submatrixA12(newMSize, innerVector);
-        vector< vector<int> > submatrixA21(newMSize, innerVector);
-        vector< vector<int> > submatrixA22(newMSize, innerVector);
+        // initialize matrices
+        vector< vector<int> > matrixA11(newMSize, innerVector),
+                            matrixA12(newMSize, innerVector),
+                            matrixA21(newMSize, innerVector),
+                            matrixA22(newMSize, innerVector),
+                            matrixB11(newMSize, innerVector),
+                            matrixB12(newMSize, innerVector),
+                            matrixB21(newMSize, innerVector),
+                            matrixB22(newMSize, innerVector),
+                            matrixC11(newMSize, innerVector),
+                            matrixC12(newMSize, innerVector),
+                            matrixC21(newMSize, innerVector),
+                            matrixC22(newMSize, innerVector),
+                            s1(newMSize, innerVector),
+                            s2(newMSize, innerVector),
+                            s3(newMSize, innerVector),
+                            s4(newMSize, innerVector),
+                            s5(newMSize, innerVector),
+                            s6(newMSize, innerVector),
+                            s7(newMSize, innerVector),
+                            s8(newMSize, innerVector),
+                            s9(newMSize, innerVector),
+                            s10(newMSize, innerVector),
+                            p1(newMSize, innerVector),
+                            p2(newMSize, innerVector),
+                            p3(newMSize, innerVector),
+                            p4(newMSize, innerVector),
+                            p5(newMSize, innerVector),
+                            p6(newMSize, innerVector),
+                            p7(newMSize, innerVector),
+                            tempMatrixA(newMSize, innerVector),
+                            tempMatrixB(newMSize, innerVector);
 
-        vector< vector<int> > submatrixB11(newMSize, innerVector);
-        vector< vector<int> > submatrixB12(newMSize, innerVector);
-        vector< vector<int> > submatrixB21(newMSize, innerVector);
-        vector< vector<int> > submatrixB22(newMSize, innerVector);
-
-        vector< vector<int> > submatrixC11(newMSize, innerVector);
-        vector< vector<int> > submatrixC12(newMSize, innerVector);
-        vector< vector<int> > submatrixC21(newMSize, innerVector);
-        vector< vector<int> > submatrixC22(newMSize, innerVector);
-
-        vector< vector<int> > s1(newMSize, innerVector);
-        vector< vector<int> > s2(newMSize, innerVector);
-        vector< vector<int> > s3(newMSize, innerVector);
-        vector< vector<int> > s4(newMSize, innerVector);
-        vector< vector<int> > s5(newMSize, innerVector);
-        vector< vector<int> > s6(newMSize, innerVector);
-        vector< vector<int> > s7(newMSize, innerVector);
-        vector< vector<int> > s8(newMSize, innerVector);
-        vector< vector<int> > s9(newMSize, innerVector);
-        vector< vector<int> > s10(newMSize, innerVector);
-
-        vector< vector<int> > p1(newMSize, innerVector);
-        vector< vector<int> > p2(newMSize, innerVector);
-        vector< vector<int> > p3(newMSize, innerVector);
-        vector< vector<int> > p4(newMSize, innerVector);
-        vector< vector<int> > p5(newMSize, innerVector);
-        vector< vector<int> > p6(newMSize, innerVector);
-        vector< vector<int> > p7(newMSize, innerVector);
-
-        vector< vector<int> > matrixAResult(newMSize, innerVector);
-        vector< vector<int> > matrixBResult(newMSize, innerVector);
-
-        // divide matrices
+        // divide matrices into 4 submatrices
         for (int i = 0; i < newMSize; i++) {
             for (int j = 0; j < newMSize; j++) {
-                submatrixA11[i][j] = matrixA[i][j];
-                submatrixA12[i][j] = matrixA[i][j + newMSize];
-                submatrixA21[i][j] = matrixA[i + newMSize][j];
-                submatrixA22[i][j] = matrixA[i + newMSize][j + newMSize];
+                matrixA11[i][j] = matrixA[i][j];
+                matrixA12[i][j] = matrixA[i][j + newMSize];
+                matrixA21[i][j] = matrixA[i + newMSize][j];
+                matrixA22[i][j] = matrixA[i + newMSize][j + newMSize];
 
-                submatrixB11[i][j] = matrixB[i][j];
-                submatrixB12[i][j] = matrixB[i][j + newMSize];
-                submatrixB21[i][j] = matrixB[i + newMSize][j];
-                submatrixB22[i][j] = matrixB[i + newMSize][j + newMSize];
+                matrixB11[i][j] = matrixB[i][j];
+                matrixB12[i][j] = matrixB[i][j + newMSize];
+                matrixB21[i][j] = matrixB[i + newMSize][j];
+                matrixB22[i][j] = matrixB[i + newMSize][j + newMSize];
             }
         }
 
-        // Calculating p1 to p7:
-        add(submatrixA11, submatrixA22, s5, newMSize); // a11 + a22 = s5
-        add(submatrixB11, submatrixB22, s6, newMSize); // b11 + b22 = s6
-        strassenR(s5, s6, p1, newMSize); // p1 = (a11+a22) * (b11+b22)
+        // s1 = b12 - b22
+        sub(matrixB12, matrixB22, s1, newMSize);
+        
+        // s2 = a11 + a12
+        add(matrixA11, matrixA12, s2, newMSize);
 
-        add(submatrixA21, submatrixA22, s3, newMSize); // a21 + a22 = s3
-        strassenR(s3, submatrixB11, p2, newMSize); // p2 = (a21+a22) * (b11)
+        // s3 = a21 + a22
+        add(matrixA21, matrixA22, s3, newMSize);
 
-        sub(submatrixB12, submatrixB22, s1, newMSize); // b12 - b22 = s1
-        strassenR(submatrixA11, s1, p3, newMSize); // p3 = (a11) * (b12 - b22)
+        // s4 = b21 - b11
+        sub(matrixB21, matrixB11, s4, newMSize);
+        
+        // s5 = a11 + a22
+        add(matrixA11, matrixA22, s5, newMSize);
+        
+        // s6 = b11 + b22
+        add(matrixB11, matrixB22, s6, newMSize);
 
-        sub(submatrixB21, submatrixB11, s4, newMSize); // b21 - b11 = s4
-        strassenR(submatrixA22, s4, p4, newMSize); // p4 = (a22) * (b21 - b11)
+        // s7 = a12 - a22
+        sub(matrixA12, matrixA22, s7, newMSize);
 
-        add(submatrixA11, submatrixA12, s2, newMSize); // a11 + a12 = s2
-        strassenR(s2, submatrixB22, p5, newMSize); // p5 = (a11+a12) * (b22)
+        // s8 = b21 + b22
+        add(matrixB21, matrixB22, s8, newMSize);
 
-        sub(submatrixA21, submatrixA11, s9, newMSize); // a21 - a11 = s9 IS THIS CORRECT???
-        add(submatrixB11, submatrixB12, s10, newMSize); // b11 + b12 = s10
-        strassenR(s9, s10, p6, newMSize); // p6 = (a21-a11) * (b11+b12)
+        // s9 = a11 - a21
+        sub(matrixA11, matrixA21, s9, newMSize);
 
-        sub(submatrixA12, submatrixA22, s7, newMSize); // a12 - a22 = s7
-        add(submatrixB21, submatrixB22, s8, newMSize); // b21 + b22 = s8
-        strassenR(s7, s8, p7, newMSize); // p7 = (a12-a22) * (b21+b22)
+        // s10 = b11 + b12
+        add(matrixB11, matrixB12, s10, newMSize);
 
-        // calculating c21, c21, c11, c22:
-        add(p3, p5, submatrixC12, newMSize); // c12 = p3 + p5
-        add(p2, p4, submatrixC21, newMSize); // c21 = p2 + p4
+        // p1 = a11 * s1
+        strassenR(matrixA11, s1, p1, newMSize);
 
-        add(p1, p4, matrixAResult, newMSize); // p1 + p4
-        add(matrixAResult, p7, matrixBResult, newMSize); // p1 + p4 + p7
-        sub(matrixBResult, p5, submatrixC11, newMSize); // c11 = p1 + p4 - p5 + p7
+        // p2 = s2 * b22
+        strassenR(s2, matrixB22, p2, newMSize);
 
-        add(p1, p3, matrixAResult, newMSize); // p1 + p3
-        add(matrixAResult, p6, matrixBResult, newMSize); // p1 + p3 + p6
-        sub(matrixBResult, p2, submatrixC22, newMSize); // c22 = p1 + p3 - p2 + p6
+        // p3 = s3 * b11
+        strassenR(s3, matrixB11, p3, newMSize);
+
+        // p4 = a22 * s4
+        strassenR(matrixA22, s4, p4, newMSize);
+
+        // p5 = s5 * s6
+        strassenR(s5, s6, p5, newMSize); 
+
+        // p6 = s7 * s8
+        strassenR(s7, s8, p6, newMSize);
+
+        // p7 = s9 * s10
+        strassenR(s9, s10, p7, newMSize);
+
+        // c11 = p5 + p4 - p2 + p6
+        add(p5, p4, tempMatrixA, newMSize); // p5 + p4
+        add(tempMatrixA, p6, tempMatrixB, newMSize); // (p5 + p4) + p6
+        sub(tempMatrixB, p2, matrixC11, newMSize); // (p5 + p4 + p6) - p2
+
+        // c12 = p1 + p2
+        add(p1, p2, matrixC12, newMSize);
+
+        // c21 = p3 + p4
+        add(p3, p4, matrixC21, newMSize);
+
+        // c22 = p5 + p1 - p3 + p7
+        add(p5, p1, tempMatrixA, newMSize); // p5 + p1
+        sub(tempMatrixA, p3, tempMatrixB, newMSize); // (p5 + p1) - p3
+        sub(tempMatrixB, p7, matrixC22, newMSize); // (p5 + p1 - p3) - p7
 
         // group into matrixC
         for (int i = 0; i < newMSize ; i++) {
             for (int j = 0 ; j < newMSize ; j++) {
-                matrixC[i][j] = submatrixC11[i][j];
-                matrixC[i][j + newMSize] = submatrixC12[i][j];
-                matrixC[i + newMSize][j] = submatrixC21[i][j];
-                matrixC[i + newMSize][j + newMSize] = submatrixC22[i][j];
+                matrixC[i][j] = matrixC11[i][j];
+                matrixC[i][j + newMSize] = matrixC12[i][j];
+                matrixC[i + newMSize][j] = matrixC21[i][j];
+                matrixC[i + newMSize][j + newMSize] = matrixC22[i][j];
             }
         }
 
@@ -257,7 +283,7 @@ int main() {
     cout << endl << "MATRIX B" << endl;
     printMatrix(matrixB, matrixSize);
 
-    cout << endl << "MATRIX C" << endl;
+    cout << endl << "MATRIX C = A * B" << endl;
     printMatrix(matrixC, matrixSize);
 
     // write matrix product to output file
