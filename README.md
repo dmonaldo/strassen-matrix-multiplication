@@ -24,7 +24,7 @@ Run the program:
 
 When prompted, type the name of your input file. The program will get the two square matrices from your input file and print the multiplication result to the console. The values of S1 to S10 are also printed to the console when the algorithm observes an n = 2 matrix.
 
-The results will also be written to a file named `output.txt`.
+The results will be written to a file named `output.txt`.
 
 ## Strassen's algorithm
 
