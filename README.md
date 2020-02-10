@@ -1,7 +1,42 @@
-Implement Strassen’s algorithm in C++ or Python. Your code should get two square matrices (of any size) from a file and prints the multiplication result. The file format is as follows:
+# strassen-matrix-multiplication
+
+Strassen's matrix multiplication algorithm is an important technique for performant multiplication of large matrices. This repository implements Strassen's algorithm for square matrices (n x n) where n is a power of 2.
+
+## Installation
+
+Compile with Visual Studio Code by running the `build` task.
+
+Or complie via the command line:
+```bash
+g++ main.cpp -o strassen.cpp
+```
+
+## Usage
+
+Create a file named `input.txt` that follows the structure below. The first line is n size of the matrices.
 
 ![](/sample-input.png)
 
+Run the program:
+```bash
+./strassen.cpp
+```
+
+When prompted, type the name of your input file. The program will get the two square matrices from your input file and print the multiplication result to the console. The values of S1 to S10 are also printed to the console when the algorithm observes an n = 2 matrix.
+
+The results will also be written to a file named `output.txt`.
+
+## Strassen algorithm
+
 ![](/strassen-steps.png)
 
-Assume that n could be between 1 and 256 (including 1 and 256) and is a power of 2. In addition to creating the output file, your code should also print the values of S1 to S10 on the monitor when the size of the input matrix is n = 2. Note that since the algorithm is recursive, even with larger matrices, when the algorithm observes n = 2 should print the values of S’s on the monitor.
+### Constraints
+Assume that n could be between 1 and 256 (including 1 and 256) and is a power of 2. Size of input matrices are n x n.
+
+## Roadmap
+- Implement simple matrix multiplication algorithm for when n < k to improve performance for small matrices
+- Add support for n != power of 2 matrices by padding matrices with zeros
+- Allow for n > 256 cases
+
+## License
+[ISC](https://choosealicense.com/licenses/isc/)
