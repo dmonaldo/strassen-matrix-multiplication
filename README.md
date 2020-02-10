@@ -26,9 +26,13 @@ When prompted, type the name of your input file. The program will get the two sq
 
 The results will also be written to a file named `output.txt`.
 
-## Strassen algorithm
+## Strassen's algorithm
 
 ![](/strassen-steps.png)
+
+Time complexity of simple matrix multiplication: O(n^3)
+
+Time complexity of Strassen's algorithm: O(n^2.808)
 
 ### Constraints
 Assume that n could be between 1 and 256 (including 1 and 256) and is a power of 2. Size of input matrices are n x n.
