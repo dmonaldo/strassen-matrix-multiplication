@@ -274,14 +274,14 @@ int main() {
     }
     inputFile.close();
 
-    // run strassen matrix multiplication algorithm
-    strassen(matrixA, matrixB, matrixC, matrixSize);
-
-    cout << endl << "MATRIX A" << endl;
+    cout << endl << "INPUT MATRIX A" << endl;
     printMatrix(matrixA, matrixSize);
 
-    cout << endl << "MATRIX B" << endl;
+    cout << endl << "INPUT MATRIX B" << endl;
     printMatrix(matrixB, matrixSize);
+
+    // run strassen matrix multiplication algorithm
+    strassen(matrixA, matrixB, matrixC, matrixSize);
 
     cout << endl << "MATRIX C = A * B" << endl;
     printMatrix(matrixC, matrixSize);
