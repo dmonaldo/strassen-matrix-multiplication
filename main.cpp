@@ -56,8 +56,7 @@ void printMatrix(vector< vector<int> > &matrix, unsigned int mSize) {
 void strassenR(vector< vector<int> > &matrixA,
             vector< vector<int> > &matrixB,
             vector< vector<int> > &matrixC,
-            unsigned int mSize,
-            unsigned int inputMatrixSize) {
+            unsigned int mSize) {
 
     // recursive base case
     if (mSize == 1) {
@@ -123,29 +122,29 @@ void strassenR(vector< vector<int> > &matrixA,
         // Calculating p1 to p7:
         add(submatrixA11, submatrixA22, s5, newMSize); // a11 + a22 = s5
         add(submatrixB11, submatrixB22, s6, newMSize); // b11 + b22 = s6
-        strassenR(s5, s6, p1, newMSize, inputMatrixSize); // p1 = (a11+a22) * (b11+b22)
+        strassenR(s5, s6, p1, newMSize); // p1 = (a11+a22) * (b11+b22)
 
         add(submatrixA21, submatrixA22, s3, newMSize); // a21 + a22 = s3
-        strassenR(s3, submatrixB11, p2, newMSize, inputMatrixSize); // p2 = (a21+a22) * (b11)
+        strassenR(s3, submatrixB11, p2, newMSize); // p2 = (a21+a22) * (b11)
 
         sub(submatrixB12, submatrixB22, s1, newMSize); // b12 - b22 = s1
-        strassenR(submatrixA11, s1, p3, newMSize, inputMatrixSize); // p3 = (a11) * (b12 - b22)
+        strassenR(submatrixA11, s1, p3, newMSize); // p3 = (a11) * (b12 - b22)
 
         sub(submatrixB21, submatrixB11, s4, newMSize); // b21 - b11 = s4
-        strassenR(submatrixA22, s4, p4, newMSize, inputMatrixSize); // p4 = (a22) * (b21 - b11)
+        strassenR(submatrixA22, s4, p4, newMSize); // p4 = (a22) * (b21 - b11)
 
         add(submatrixA11, submatrixA12, s2, newMSize); // a11 + a12 = s2
-        strassenR(s2, submatrixB22, p5, newMSize, inputMatrixSize); // p5 = (a11+a12) * (b22)
+        strassenR(s2, submatrixB22, p5, newMSize); // p5 = (a11+a12) * (b22)
 
         sub(submatrixA21, submatrixA11, s9, newMSize); // a21 - a11 = s9 IS THIS CORRECT???
         add(submatrixB11, submatrixB12, s10, newMSize); // b11 + b12 = s10
-        strassenR(s9, s10, p6, newMSize, inputMatrixSize); // p6 = (a21-a11) * (b11+b12)
+        strassenR(s9, s10, p6, newMSize); // p6 = (a21-a11) * (b11+b12)
 
         sub(submatrixA12, submatrixA22, s7, newMSize); // a12 - a22 = s7
         add(submatrixB21, submatrixB22, s8, newMSize); // b21 + b22 = s8
-        strassenR(s7, s8, p7, newMSize, inputMatrixSize); // p7 = (a12-a22) * (b21+b22)
+        strassenR(s7, s8, p7, newMSize); // p7 = (a12-a22) * (b21+b22)
 
-        // calculating c21, c21, c11 e c22:
+        // calculating c21, c21, c11, c22:
         add(p3, p5, submatrixC12, newMSize); // c12 = p3 + p5
         add(p2, p4, submatrixC21, newMSize); // c21 = p2 + p4
 
@@ -167,8 +166,8 @@ void strassenR(vector< vector<int> > &matrixA,
             }
         }
 
-        // print s values to console for input matrices of n = 2
-        if (inputMatrixSize == 2) {
+        // print s values to console for matrices of n = 2
+        if (mSize == 2) {
             cout << endl;
             cout << "S1: " << s1[0][0] << endl;
             cout << "S2: " << s2[0][0] << endl;
@@ -188,9 +187,8 @@ void strassenR(vector< vector<int> > &matrixA,
 void strassen(vector< vector<int> > &matrixA, 
               vector< vector<int> > &matrixB, 
               vector< vector<int> > &matrixC,
-              unsigned int mSize,
-              unsigned int inputMSize) {
-    strassenR(matrixA, matrixB, matrixC, mSize, inputMSize);
+              unsigned int mSize) {
+    strassenR(matrixA, matrixB, matrixC, mSize);
 }
 
 int main() {
@@ -251,7 +249,7 @@ int main() {
     inputFile.close();
 
     // run strassen matrix multiplication algorithm
-    strassen(matrixA, matrixB, matrixC, matrixSize, matrixSize);
+    strassen(matrixA, matrixB, matrixC, matrixSize);
 
     cout << endl << "MATRIX A" << endl;
     printMatrix(matrixA, matrixSize);
